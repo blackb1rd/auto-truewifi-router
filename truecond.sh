@@ -10,6 +10,9 @@ vlan='eth/x/x/x:xxx.xxx'
 logout() {
   curl --user-agent "Mozilla/5.0 (X11; Linux i686; rv:12.0) Gecko/20100101 Firefox/12.0" --cookie /tmp/cookiejar.txt --cookie-jar /tmp/cookiejar.txt --insecure "https://portal.trueinternet.co.th/wifiauthen/logout_result.php"
 }
+logout_para() {
+  curl --user-agent "Mozilla/5.0 (X11; Linux i686; rv:12.0) Gecko/20100101 Firefox/12.0" --cookie /tmp/cookiejar.txt --cookie-jar /tmp/cookiejar.txt --connect-timeout 5 --location --insecure --data "param=$parameter" 'https://portal.trueinternet.co.th/wifiauthen/web/wifi-logout-success.php?param=$parameter'
+}
 login() {
   param=$(curl www.google.com |grep login |sed -e 's/.*login.do?//' -e "s@<.*>@\&$vlan@")
   parameter=$(curl --user-agent "Mozilla/5.0 (X11; Linux i686; rv:12.0) Gecko/20100101 Firefox/12.0" --location --cookie /tmp/cookiejar.txt --cookie-jar /tmp/cookiejar.txt --insecure "https://portal.trueinternet.co.th/wifiauthen/internet.co.th/wifiauthen/login.do?$param" | grep param= | sed -e 's/.*param=//' -e 's/\".*>//')
@@ -34,12 +37,12 @@ if [ -z "$up" ]; then
   sleep 10500 # delay for 175 minute which is default truewifi disconnect every 180 minute
     
   logout
-  logouter=`curl --user-agent "Mozilla/5.0 (X11; Linux i686; rv:12.0) Gecko/20100101 Firefox/12.0" --cookie /tmp/cookiejar.txt --cookie-jar /tmp/cookiejar.txt --connect-timeout 5 --location --insecure --data "param=$parameter" 'https://portal.trueinternet.co.th/wifiauthen/web/wifi-logout-success.php?param=$parameter'`
+  logout_para
   login
 
 else
   logout
-  logouter=`curl --user-agent "Mozilla/5.0 (X11; Linux i686; rv:12.0) Gecko/20100101 Firefox/12.0" --cookie /tmp/cookiejar.txt --cookie-jar /tmp/cookiejar.txt --connect-timeout 5 --location --insecure --data "param=$parameter" 'https://portal.trueinternet.co.th/wifiauthen/web/wifi-logout-success.php?param=$parameter'`
+  logout_para
   login
 fi
 
