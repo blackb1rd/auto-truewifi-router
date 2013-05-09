@@ -15,9 +15,9 @@ logout_para() {
 }
 login() {
   param=$(curl www.google.com |grep login |sed -e 's/.*login.do?//' -e "s@<.*>@\&$vlan@")
-  parameter=$(curl --user-agent "Mozilla/5.0 (X11; Linux i686; rv:12.0) Gecko/20100101 Firefox/12.0" --location --cookie /tmp/cookiejar.txt --cookie-jar /tmp/cookiejar.txt --insecure "https://portal.trueinternet.co.th/wifiauthen/internet.co.th/wifiauthen/login.do?$param" | grep param= | sed -e 's/.*param=//' -e 's/\".*>//')
+  parameter=$(curl --user-agent "Mozilla/5.0 (X11; Linux i686; rv:12.0) Gecko/20100101 Firefox/12.0" --location --cookie /tmp/cookiejar.txt --cookie-jar /tmp/cookiejar.txt --insecure "https://portal.trueinternet.co.th/wifiauthen/login.do?$param" | grep param= | sed -e 's/.*param=//' -e 's/\".*>//')
   curl --user-agent "Mozilla/5.0 (X11; Linux i686; rv:12.0) Gecko/20100101 Firefox/12.0" --location --cookie /tmp/cookiejar.txt --cookie-jar /tmp/cookiejar.txt  --insecure "https://portal.trueinternet.co.th/wifiauthen/web/wifi-login.php?param=$parameter"
-  curl --user-agent "Mozilla/5.0 (X11; Linux i686; rv:12.0) Gecko/20100101 Firefox/12.0" --referer "https://portal.trueinternet.co.th/wifiauthen/login.php" --cookie /tmp/cookiejar.txt --cookie-jar /tmp/cookiejar.txt --data "username=$trueusername&password=$truepassword¶m=$parameter" --insecure "https://portal.trueinternet.co.th/wifiauthen/login_result.php"
+  curl --user-agent "Mozilla/5.0 (X11; Linux i686; rv:12.0) Gecko/20100101 Firefox/12.0" --referer "https://portal.trueinternet.co.th/wifiauthen/login.php" --cookie /tmp/cookiejar.txt --cookie-jar /tmp/cookiejar.txt --data "username=$trueusername&password=$truepassword&param=$parameter" --insecure "https://portal.trueinternet.co.th/wifiauthen/login_result.php"
 }
 
 logout
