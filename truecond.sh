@@ -27,7 +27,7 @@ sleep 5
 
 while [ 1 ]; do
 
-up=`curl www.google.com | grep ' WISPAccessGatewayParam'` #check web external site
+up=`curl 'www.google.com/search?q=ip' | grep 'Client IP address:'` #check web external site
 if [ "$up" ]; then
   ip=`wget -O /tmp/ip.txt http://automation.whatismyip.com/n09230945.asp`
   extip=`cat /tmp/ip.txt`
