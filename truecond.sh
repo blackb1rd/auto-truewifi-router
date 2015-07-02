@@ -26,12 +26,12 @@ login
 sleep 5
 while [ 1 ]; do
     #check web external site
-    up=`curl 'www.google.com/search?q=ip' | grep 'Client IP address:'` 
+    up=`curl 'www.google.com/search?q=ip' | grep 'Client IP address:'`
     if [ "$up" ]; then
         # synctime to avoid crontab time missing
         sync=`ntpdate ntp.ubuntu.com`
         # delay for 175 minute which is default truewifi disconnect every 180 minute
-        sleep 10500 
+        sleep 10500
         logout
         logout_para
         login
